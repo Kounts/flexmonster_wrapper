@@ -1,0 +1,11 @@
+## Java
+*.class
+.gradle
+build
+!/build/libs/flex-monster-wrapper-1.0.jar
+
+## IntelliJ
+.idea
+*.iml
+*.ipr
+*.iws

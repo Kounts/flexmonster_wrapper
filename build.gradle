@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+version = '1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+
+    mavenCentral()
+}
+
+dependencies {
+    compile name: 'flexmonster-compressor'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "be.looorent.flexmonster.CompressionService"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task copyJar {
+    println "coucou"
+    copy {
+        into "dist"
+        from "build/libs/flexmonster-wrapper-${version}.jar"
+    }
+}
+
+jar.finalizedBy copyJar
