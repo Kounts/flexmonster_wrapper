@@ -1,8 +1,8 @@
 ## Java
 *.class
 .gradle
+!/build/libs/flexmonster-wrapper-*.jar
 build
-!/build/libs/flex-monster-wrapper-1.0.jar
 
 ## IntelliJ
 .idea

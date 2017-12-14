@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import static java.sql.DriverManager.getConnection;
 
@@ -16,11 +16,11 @@ class InputRepository {
         this.configuration = configuration;
     }
 
-    public <T> T findAndExecute(String query, Function<ResultSet, T> process) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
+    public void findAndExecute(String query, Consumer<ResultSet> process) throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
         try (Connection connection = createConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
-            return process.apply(resultSet);
+             process.accept(resultSet);
         }
     }
 
